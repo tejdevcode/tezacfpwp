@@ -4891,6 +4891,7 @@ body.search-is-visible {
 .blog-post__thumb {
     display: block;
     margin-bottom: var(--vspace-1_5);
+    text-align: center;
 }
 
 .blog-post__thumb img {
@@ -4955,7 +4956,7 @@ body.search-is-visible {
 }
 
 .blog-post-nav {
-    max-width: 920px;
+    max-width: 950px;
 }
 
 .blog-post-nav span {

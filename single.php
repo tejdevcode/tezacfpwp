@@ -10,31 +10,114 @@
 get_header();
 ?>
 
-	<main id="primary" class="site-main">
+	<!-- blog content
+    ================================================== -->
+    <div class="blog-content">
 
-		<?php
-		while ( have_posts() ) :
-			the_post();
+        <div class="row blog-post-wrap">
+            <div class="column large-12">
 
-			get_template_part( 'template-parts/content', get_post_type() );
+                <article class="blog-post">
 
-			the_post_navigation(
-				array(
-					'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'acfwp' ) . '</span> <span class="nav-title">%title</span>',
-					'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'acfwp' ) . '</span> <span class="nav-title">%title</span>',
-				)
-			);
+                    <div class="blog-post__header">
+                    	<?php
+                    	if ( is_singular() ) :
+                    		the_title( '<h1 class="blog-post__title">', '</h1>' );
+                    	else :
+                    		the_title( '<h2 class="blog-post__title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
+                    	endif;?>
+                        
+                        <div class="blog-post__meta">
 
-			// If comments are open or we have at least one comment, load up the comment template.
-			if ( comments_open() || get_comments_number() ) :
-				comments_template();
-			endif;
+                            <div class="blog-post__date"><?php echo acfwp_posted_on();?></div>
+          
+                            <p class="blog-post__cat">
+                                <a href="category.html">Design</a>
+                                <a href="category.html">Frontend</a>
+                                <a href="category.html">Featured</a>
+                            </p>
+          
+                         </div>
+                    </div> <!-- blog-post__header -->
 
-		endwhile; // End of the loop.
-		?>
+                    <div class="blog-post__thumb">
+                        <?php acfwp_post_thumbnail(); ?>
+                    </div>  <!-- blog-post__thumb -->
 
-	</main><!-- #main -->
+                    <div class="blog-post__content lead drop-cap">
+
+                    	<?php
+                    	the_content(
+                    		sprintf(
+                    			wp_kses(
+                    				/* translators: %s: Name of current post. Only visible to screen readers */
+                    				__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'acfwp' ),
+                    				array(
+                    					'span' => array(
+                    						'class' => array(),
+                    					),
+                    				)
+                    			),
+                    			wp_kses_post( get_the_title() )
+                    		)
+                    	);
+
+                    	wp_link_pages(
+                    		array(
+                    			'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'acfwp' ),
+                    			'after'  => '</div>',
+                    		)
+                    	);
+                    	?>
+
+                    	<p class="blog-post__tags">
+                    		<?php
+                    		$posttags = get_the_tags();
+                    		if ($posttags) { ?>
+                            <span class="blog-post__tags-title">Post tags</span>
+                            <span class="blog-post__tag-list">
+                            	
+                            		<?php foreach($posttags as $tag) {
+                            			echo '<a href="#0">'.$tag->name . '</a>'; 
+                            		}
+                            	}
+                            	?>
+                            </span>
+                        </p> 
+
+                    </div> <!-- end blog-post__content -->
+
+                </article> <!-- blog post -->
+
+            </div> <!-- column -->
+        </div> <!-- end blog-post-wrap -->
+
+        <div class="blog-post-nav-wrap">
+            <div class="row blog-post-nav">
+                <div class="column large-6 tab-12 blog-post-nav__prev">
+                    <?php  $prev_post = get_adjacent_post(false, '', true);
+                    if(!empty($prev_post)) {
+                    	echo '<a href="' . get_permalink($prev_post->ID) . '" title="' . $prev_post->post_title . '" rel="prev"><span>Prev</span>' . $prev_post->post_title . '</a>'; }
+
+                    	?>
+
+                </div>
+                <div class="column large-6 tab-12 blog-post-nav__next">
+                    <?php 
+                    $next_post = get_adjacent_post(false, '', false);
+                    if(!empty($next_post)) {
+                    	echo '<a href="' . get_permalink($next_post->ID) . '" title="' . $next_post->post_title . '"  rel="next"><span>Next</span>' . $next_post->post_title . '</a>'; }
+
+                    	?>
+                </div>
+            </div>
+        </div> <!-- end blog-post-nav-wrap -->
+
+    </div> <!-- end blog-content -->
+
+
+
+	
 
 <?php
-get_sidebar();
 get_footer();

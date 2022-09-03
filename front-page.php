@@ -46,7 +46,7 @@ get_header();
 
      <!-- contact
     ================================================== -->
-    <?php get_template_part( 'template-parts/content-module/contact' ); ?>
+    <?php //get_template_part( 'template-parts/content-module/contact' ); ?>
 
 
 </main>

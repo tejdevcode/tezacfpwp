@@ -40,7 +40,7 @@
                         <div class="blog-entry__avatar"> '.get_the_post_thumbnail().'</div>
 
                         <div class="column large-9 w-1000-stack blog-entry__title">
-                            <h3 class="h2"><a href="blog-single.html">'. get_the_title() .'</a></h3>
+                            <h3 class="h2"><a href="'.get_the_permalink().'">'. get_the_title() .'</a></h3>
                         </div>
 
                         <div class="column large-3 w-1000-stack blog-entry__meta">
@@ -52,7 +52,7 @@
                     <div class="row">
 
                     <div class="column large-9 w-1000-stack blog-entry__content">
-                        <p>' . get_the_content() . '<a href="'.get_the_permalink().'" class="more-link">Read More</a></p>
+                        <p>' . substr(get_the_content(),0 , 350) . '... <a href="'.get_the_permalink().'" class="more-link">Read More</a></p>
                     </div>
 
                     </div>
